@@ -6,8 +6,6 @@ struct node{
     struct node* next;
 };
 
-
-
 struct node* newNode(int value, struct node *next) {
     struct node* newNode = (struct node*)malloc(sizeof(struct node));
     newNode->value = value;
@@ -15,6 +13,13 @@ struct node* newNode(int value, struct node *next) {
     return newNode;
 }
 
+void freeNodes(struct node* head) {
+    while (head != NULL) {
+        struct node* temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
 
 void printAdjList(struct node* adjList[], int numOfNodes) {
     printf("Adjacency List:\n");
@@ -67,6 +72,12 @@ int main() {
     }
 
     printAdjList(adjList,numOfNodes);
+
+    // Free the nodes
+    for (int i = 0; i < numOfNodes; i++) {
+        freeNodes(adjList[i]);
+    }
+    free(adjList);
 
     return 0;
 }
